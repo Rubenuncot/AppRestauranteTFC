@@ -7,19 +7,23 @@ class CardTable extends StatelessWidget {
   final List<String> names;
   final List<IconData> icons;
   final List<String> routes;
+  final List<Color>? colors;
   
-  const CardTable({super.key, required this.names, required this.icons, required this.routes});
+  const CardTable({super.key, required this.names, required this.icons, this.routes = const [], this.colors});
   
 
   double getNumberRows(){
     return (names.length / 2).abs() + 1;
   }
 
-  List<Color> randomColorGenerator(){
-    List<Color> colors = [];
-    for(var i = 0; i < names.length; i++){
-      colors.add(Color.fromARGB(255, 185, Random().nextInt(255) + 185, Random().nextInt(255) + 185));
-      // colors.add(Color.fromRGBO(255, 185, 185, 1));
+  List<Color>? randomColorGenerator(){
+    if(colors == null){
+      List<Color> colorsTemp = [];
+      for(var i = 0; i < names.length; i++){
+        colorsTemp.add(Color.fromARGB(255, 185, Random().nextInt(255) + 185, Random().nextInt(255) + 185));
+        // colors.add(Color.fromRGBO(255, 185, 185, 1));
+      }
+      return colorsTemp;
     }
     return colors;
   }
@@ -80,7 +84,7 @@ class CardTable extends StatelessWidget {
       itemCount: names.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) => 
-        _SingleCard(icon: iconsModify[index], color: randomColorGenerator()[index], text: names[index], route: routes[index] ),
+        _SingleCard(icon: iconsModify[index], color: randomColorGenerator()![index], text: names[index], route: routes[0] == "emp" ? 'empty' : routes[index] ),
     );
   }
 }
@@ -89,7 +93,7 @@ class _SingleCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String text;
-  final String route;
+  final String? route;
 
   const _SingleCard({
     super.key, 
@@ -101,49 +105,44 @@ class _SingleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, route);
-      },
-      child: Container(
-        margin: const EdgeInsets.all(20),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(40),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              height: 150,
-              decoration: BoxDecoration(
-                color:const Color.fromARGB(129, 29, 27, 10),
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 35,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          stops: const [0.1, 0.5],
-                          colors: [
-                            const Color.fromARGB(255, 209, 209, 209),
-                            color,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(100)
+    return Container(
+      margin: const EdgeInsets.all(20),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(40),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            height: 150,
+            decoration: BoxDecoration(
+              color:const Color.fromARGB(129, 29, 27, 10),
+              borderRadius: BorderRadius.circular(40),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 35,
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: const [0.1, 0.5],
+                        colors: [
+                          const Color.fromARGB(255, 209, 209, 209),
+                          color,
+                        ],
                       ),
-                      child: Icon(icon, color: Colors.white, size: 35,)
+                      borderRadius: BorderRadius.circular(100)
                     ),
+                    child: Icon(icon, color: Colors.white, size: 35,)
                   ),
-                  const SizedBox(height: 20,),
-                  Text(text, style: TextStyle(color: color, fontSize: 15),)
-                ],
-              ),
+                ),
+                const SizedBox(height: 20,),
+                Text(text, style: TextStyle(color: color, fontSize: 15),)
+              ],
             ),
           ),
         ),
