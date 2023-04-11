@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         
         children: [
-          BackGround(size: size,),
+          BackGround(size: size, image: 'utils/images/backgiffood.gif',),
           Column(
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -40,11 +40,11 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () async {
 
                       // Navigator.pushNamed(context, '_main');
-                      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#1C4C96", "Cancelar", false, ScanMode.QR);
-                      if(barcodeScanRes == 'hola'){
-                        Navigator.pushNamed(context, '_main');
-                      }
-
+                      // String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#1C4C96", "Cancelar", false, ScanMode.QR);
+                      // if(barcodeScanRes == 'hola'){
+                      //   Navigator.pushNamedAndRemoveUntil(context, '_main', (route) => false);
+                      // }
+                      Navigator.pushNamedAndRemoveUntil(context, '_main', (route) => false);
                     },
                       
                     child: const Text('Iniciar Sesión'),

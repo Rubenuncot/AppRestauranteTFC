@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const Color primaryColor = Colors.indigo;
   static Color secondaryColor = Colors.indigo.shade300;
+  static Color? backgroundColor = const Color.fromARGB(200, 0, 0, 75);
+  static Color? boxColor = const Color.fromARGB(60, 255, 255, 255);
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
       //Color Primario

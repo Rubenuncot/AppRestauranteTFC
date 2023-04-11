@@ -26,7 +26,7 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          BackGround(size: size),
+          BackGround(size: size, image: 'utils/images/backgiffood.gif'),
           SafeArea(
             child: CardTable(
               option: 0,

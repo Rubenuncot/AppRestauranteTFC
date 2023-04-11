@@ -12,8 +12,11 @@ class MesaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final BoxModel box = ModalRoute.of(context)?.settings.arguments as BoxModel;
+
     List<BoxModel> boxUper = [
-      BoxModel('Salon', Icons.table_bar, Colors.pink),
+      BoxModel('Mesa ${box.name}', box.icon, Colors.pink),
     ];
 
     final uperBoxHelper = BoxHelper(boxUper);
@@ -34,9 +37,10 @@ class MesaScreen extends StatelessWidget {
     final boxHelper = BoxHelper(boxes);
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: CustomAppBar(title: boxUper[0].name),
       body: Stack(
         children: [
-          BackGround(size: size),
+          BackGround(size: size, image: 'utils/images/backgiffood.gif',),
           SafeArea(
             child: Column(
               children: [
@@ -59,7 +63,6 @@ class MesaScreen extends StatelessWidget {
           ),
         ]
       ),
-      drawer: const Drawer(backgroundColor: Colors.indigo),
     );
   }
 }

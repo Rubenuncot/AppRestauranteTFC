@@ -10,6 +10,9 @@ class SalaSelectionScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    final BoxModel box = ModalRoute.of(context)?.settings.arguments as BoxModel;
+
     List<BoxModel> boxes = [
       BoxModel('Comedor', Icons.table_bar_rounded, Colors.red),
       BoxModel('Terraza', Icons.terrain, Colors.green),
@@ -25,11 +28,13 @@ class SalaSelectionScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: CustomAppBar(title: box.name),
       body: Stack(
         children: [
-          BackGround(size: size),
+          BackGround(size: size, image: 'utils/images/backgiffood.gif',),
           SafeArea(
             child: CardTable(
+              actualScreen: box.name,
               option: 0,
               helper: boxHelper,
             )

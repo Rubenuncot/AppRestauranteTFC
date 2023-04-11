@@ -64,5 +64,13 @@ class BoxHelper {
     return colors;
   }
 
-
+  BoxModel getBox(int i) {
+    BoxModel boxModel = BoxModel('name', Icons.add, Colors.white);
+    for (var box in allBoxes){
+      if(box.index == i){
+        boxModel = box;
+      }
+    }
+    return boxModel;
+  }
 }

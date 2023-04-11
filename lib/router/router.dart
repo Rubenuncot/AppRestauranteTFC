@@ -14,10 +14,10 @@ class RoutesList {
         screen: const MainScreen(),
         route: "_main"),
     MenuOption(
-        name: 'config',
+        name: 'ajustes',
         icon: Icons.list_alt,
         screen: const ConfigScreen(),
-        route: '_config'),
+        route: '_ajustes'),
     MenuOption(
         name: 'invoice',
         icon: Icons.alarm,

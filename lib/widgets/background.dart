@@ -1,10 +1,10 @@
+import 'package:app_restaurante/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class BackGround extends StatelessWidget {
   final Size size;
-  const BackGround({super.key, required this.size});
+  final String image;
+  const BackGround({super.key, required this.size, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +13,15 @@ class BackGround extends StatelessWidget {
         SizedBox(
             height: size.height,
             child:
-              const FadeInImage(
-                placeholder: AssetImage('utils/images/backgiffood.gif'), 
-                image: AssetImage('utils/images/backgiffood.gif'),
+              FadeInImage(
+                placeholder: AssetImage(image),
+                image: AssetImage(image),
                 repeat: ImageRepeat.repeatY,
               ),
           ),
           Container(
             height: size.height,
-            color: Colors.black54,
+            color: AppTheme.backgroundColor,
           ),
       ],
     );

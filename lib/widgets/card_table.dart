@@ -1,25 +1,36 @@
 import 'dart:ui';
 
 import 'package:app_restaurante/helpers/box_helper.dart';
+import 'package:app_restaurante/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CardTable extends StatelessWidget {
   final BoxHelper helper;
   final int option;
+  final Object? arguments;
+  final double maxCrossAxisExtent;
+  final String actualScreen;
   final void Function()? onTap;
-  
-  const CardTable({super.key, required this.helper, required this.option, this.onTap});
 
-  double getNumberRows(){
+  const CardTable(
+      {super.key,
+      required this.helper,
+      required this.option,
+      this.onTap,
+      this.arguments,
+      this.maxCrossAxisExtent = 0,
+      this.actualScreen = 'empty'});
+
+  double getNumberRows() {
     return (helper.boxes.length / 2).abs() + 1;
   }
 
-  set crossAxisCount(int crossAxisCount){
+  set crossAxisCount(int crossAxisCount) {
     this.crossAxisCount = crossAxisCount;
   }
 
-  bool checkCrossAxisCount(){
-    if(helper.boxes.length < 5){
+  bool checkCrossAxisCount() {
+    if (helper.boxes.length < 5) {
       return true;
     }
     return false;
@@ -27,68 +38,83 @@ class CardTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int crossAxisCount = 0; 
-    double maxCrossAxisExtent = 0; 
-    if(checkCrossAxisCount()){
-      crossAxisCount = 4;
-      maxCrossAxisExtent = 500;
+    int crossAxisCount = 0;
+    double maxCrossAxisCount;
+    if (maxCrossAxisExtent == 0) {
+      if (checkCrossAxisCount()) {
+        crossAxisCount = 4;
+        maxCrossAxisCount = 600;
+      } else {
+        crossAxisCount = 2;
+        maxCrossAxisCount = 300;
+      }
     } else {
-      crossAxisCount = 2;
-      maxCrossAxisExtent = 300;
+      crossAxisCount = 4;
+      if (maxCrossAxisExtent > 400) {
+        maxCrossAxisCount = maxCrossAxisExtent;
+      } else {
+        maxCrossAxisCount = 400;
+      }
     }
     return GridView.builder(
-      shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: maxCrossAxisExtent,
-        childAspectRatio: crossAxisCount / 2,
-      ),
-      itemCount: helper.boxes.length,
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) => 
-        GestureDetector(
-            onTap: () {
-              switch(option){
-                case 0:
-                  String route = helper.getRoute(index + helper.boxes[0].index);
-                  if(route.contains('comedor') || route.contains('terraza') || route.contains('saloninterior') || route.contains('barra')){
-                    switch(route){
-                    //TODO: Poner los argumentos de cada una de las rutas (El salon que sea, el número de mesas, etc.).
-                      case '_comedor':
-                        Navigator.pushNamed(context, '_seleccionarmesa');
-                        break;
-                      case '_terraza':
-                        Navigator.pushNamed(context, '_seleccionarmesa');
-                        break;
-                      case '_saloninterior':
-                        Navigator.pushNamed(context, '_seleccionarmesa');
-                        break;
-                      case 'barra':
-                        Navigator.pushNamed(context, '_seleccionarmesa');
-                        break;
-                    }
-                  } else {
-                    int? mesa = int.tryParse(helper.getNames()[index]);
-                    if(mesa != null){
-                      //TODO: Poner los argumentos de la mesa en cuestión (número de comensales, numero de la mesa, etc.)
-                      Navigator.pushNamed(context, '_mesa');
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: maxCrossAxisCount,
+          childAspectRatio: crossAxisCount / 2,
+        ),
+        itemCount: helper.boxes.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) => GestureDetector(
+              onTap: () {
+                switch (option) {
+                  case 0:
+                    String route =
+                        helper.getRoute(index + helper.boxes[0].index);
+                    if (route.contains('comedor') ||
+                        route.contains('terraza') ||
+                        route.contains('saloninterior') ||
+                        route.contains('barra')) {
+                      Navigator.pushNamed(context, '_seleccionarmesa',
+                          arguments:
+                              helper.getBox(index + helper.boxes[0].index));
                     } else {
-                      Navigator.pushNamed(context, route);
+                      String name = helper.getNames()[index];
+                      String number = '';
+                      if (name.contains('.')) {
+                        List<String> nameSplit = name.split('.');
+                        number = nameSplit[1];
+                      }
+
+                      int? mesa = int.tryParse(number);
+                      if (mesa != null) {
+                        //TODO: Poner los argumentos de la mesa en cuestión (número de comensales, numero de la mesa, etc.)
+                        Navigator.pushNamed(context, '_mesa',
+                            arguments:
+                                helper.getBox(index + helper.boxes[0].index));
+                      } else {
+                        Navigator.pushNamed(context, route,
+                            arguments:
+                                helper.getBox(index + helper.boxes[0].index));
+                      }
                     }
-                  }
                     break;
-                case 1:
-                  if(onTap != null){
-                    onTap;
-                  }
-                  break;
-                case 3:
-                  break;
-                default:
-                  break;
-              }
-            },
-            child: _SingleCard(icon: helper.getIcons()[index], color: helper.getColors()[index], text: helper.getNames()[index])),
-    );
+                  case 1:
+                    if (onTap != null) {
+                      onTap;
+                    }
+                    break;
+                  case 3:
+                    break;
+                  default:
+                    break;
+                }
+              },
+              child: _SingleCard(
+                icon: helper.getIcons()[index],
+                color: helper.getColors()[index],
+                text: helper.getNames()[index],
+              ),
+            ));
   }
 }
 
@@ -98,9 +124,9 @@ class _SingleCard extends StatelessWidget {
   final String text;
 
   const _SingleCard({
-    super.key, 
-    required this.icon, 
-    required this.color, 
+    super.key,
+    required this.icon,
+    required this.color,
     required this.text,
   });
 
@@ -115,7 +141,7 @@ class _SingleCard extends StatelessWidget {
           child: Container(
             height: 150,
             decoration: BoxDecoration(
-              color:const Color.fromARGB(129, 29, 27, 10),
+              color: AppTheme.boxColor,
               borderRadius: BorderRadius.circular(40),
             ),
             child: Column(
@@ -124,25 +150,32 @@ class _SingleCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 35,
                   child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: const [0.1, 0.5],
-                        colors: [
-                          const Color.fromARGB(255, 209, 209, 209),
-                          color,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(100)
-                    ),
-                    child: Icon(icon, color: Colors.white, size: 35,)
-                  ),
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            stops: const [0.1, 0.5],
+                            colors: [
+                              const Color.fromARGB(255, 209, 209, 209),
+                              color,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(100)),
+                      child: Icon(
+                        icon,
+                        color: Colors.white,
+                        size: 35,
+                      )),
                 ),
-                const SizedBox(height: 20,),
-                Text(text, style: TextStyle(color: color, fontSize: 15),)
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  text,
+                  style: TextStyle(color: color, fontSize: 15),
+                )
               ],
             ),
           ),
