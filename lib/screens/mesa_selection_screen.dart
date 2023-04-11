@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../helpers/box_helper.dart';
+import '../models/box_model.dart';
 import '../widgets/widgets.dart';
 
 class MesaSelectionScreen extends StatelessWidget {
@@ -8,7 +10,28 @@ class MesaSelectionScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    List<String> mesas = ['1', '2', '3', '4', '5', '6', '7 '];
+
+    List<BoxModel> boxUper = [
+      BoxModel('Comedor', Icons.table_bar, Colors.pink),
+    ];
+
+    final uperBoxHelper = BoxHelper(boxUper);
+
+    List<BoxModel> boxes = [
+      BoxModel('1', Icons.looks_one_rounded, Colors.red),
+      BoxModel('2', Icons.looks_two_rounded, Colors.green),
+      BoxModel('3', Icons.looks_3_rounded, Colors.blue),
+      BoxModel('4', Icons.looks_4_rounded, Colors.yellow),
+      BoxModel('5', Icons.looks_5_rounded, Colors.yellow),
+      BoxModel('6', Icons.looks_6_rounded, Colors.yellow),
+    ];
+    boxUper[0].incrementIndex();
+    for(var i = 0; i < boxes.length; i++){
+      boxes[i].incrementIndex();
+    }
+
+    final boxHelper = BoxHelper(boxes);
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -19,36 +42,16 @@ class MesaSelectionScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   height: size.height * 0.3,
-                  child: const CardTable(
-                    icons: [
-                      Icons.table_bar, 
-                    ], 
-                    names: ['Comedor'], 
-                    routes: ['hola'],
+                  child: CardTable(
+                    option: 3,
+                    helper: uperBoxHelper,
                   ),
                 ),
                 SizedBox(
                   height: size.height * 0.65,
                   child: CardTable(
-                    icons: const [
-                      Icons.looks_one, 
-                      Icons.looks_two, 
-                      Icons.looks_3, 
-                      Icons.looks_4,
-                      Icons.looks_5,
-                      Icons.looks_6,
-                      Icons.numbers_rounded,
-                    ], 
-                    names: mesas, 
-                    routes: const [
-                      '_mesa',
-                      '_mesa',
-                      '_mesa',
-                      '_mesa',
-                      '_mesa',
-                      '_mesa',
-                      '_mesa',
-                    ],
+                    option: 0,
+                    helper: boxHelper,
                   ),
                 ),
               ],

@@ -1,55 +1,17 @@
-import 'dart:math';
 import 'dart:ui';
 
+import 'package:app_restaurante/helpers/box_helper.dart';
 import 'package:flutter/material.dart';
 
 class CardTable extends StatelessWidget {
-  final List<String> names;
-  final List<IconData> icons;
-  final List<String> routes;
-  final List<Color>? colors;
+  final BoxHelper helper;
+  final int option;
+  final void Function()? onTap;
   
-  const CardTable({super.key, required this.names, required this.icons, this.routes = const [], this.colors});
-  
+  const CardTable({super.key, required this.helper, required this.option, this.onTap});
 
   double getNumberRows(){
-    return (names.length / 2).abs() + 1;
-  }
-
-  List<Color>? randomColorGenerator(){
-    if(colors == null){
-      List<Color> colorsTemp = [];
-      for(var i = 0; i < names.length; i++){
-        colorsTemp.add(Color.fromARGB(255, 185, Random().nextInt(255) + 185, Random().nextInt(255) + 185));
-        // colors.add(Color.fromRGBO(255, 185, 185, 1));
-      }
-      return colorsTemp;
-    }
-    return colors;
-  }
-
-  List<IconData> checkIconsLength(){
-    List<IconData> iconsModi = [];
-    int dif = 0;
-    if(icons.length != names.length){
-      if(icons.length > names.length){
-        dif = icons.length - names.length;
-        for(var i = 0; i < dif; i++){
-          iconsModi.add(icons[i]);
-        }
-      } else {
-        dif = names.length - icons.length;
-        for(var i = 0; i < icons.length; i++){
-          iconsModi.add(icons[i]);
-        }
-        for(var i = 0; i < dif; i++){
-          iconsModi.add(Icons.hourglass_empty_outlined);
-        }
-      }
-    } else {
-      iconsModi = icons;
-    }
-    return iconsModi;
+    return (helper.boxes.length / 2).abs() + 1;
   }
 
   set crossAxisCount(int crossAxisCount){
@@ -57,7 +19,7 @@ class CardTable extends StatelessWidget {
   }
 
   bool checkCrossAxisCount(){
-    if(names.length < 5){
+    if(helper.boxes.length < 5){
       return true;
     }
     return false;
@@ -65,7 +27,6 @@ class CardTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var iconsModify = checkIconsLength();
     int crossAxisCount = 0; 
     double maxCrossAxisExtent = 0; 
     if(checkCrossAxisCount()){
@@ -81,10 +42,52 @@ class CardTable extends StatelessWidget {
         maxCrossAxisExtent: maxCrossAxisExtent,
         childAspectRatio: crossAxisCount / 2,
       ),
-      itemCount: names.length,
+      itemCount: helper.boxes.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) => 
-        _SingleCard(icon: iconsModify[index], color: randomColorGenerator()![index], text: names[index], route: routes[0] == "emp" ? 'empty' : routes[index] ),
+        GestureDetector(
+            onTap: () {
+              switch(option){
+                case 0:
+                  String route = helper.getRoute(index + helper.boxes[0].index);
+                  if(route.contains('comedor') || route.contains('terraza') || route.contains('saloninterior') || route.contains('barra')){
+                    switch(route){
+                    //TODO: Poner los argumentos de cada una de las rutas (El salon que sea, el número de mesas, etc.).
+                      case '_comedor':
+                        Navigator.pushNamed(context, '_seleccionarmesa');
+                        break;
+                      case '_terraza':
+                        Navigator.pushNamed(context, '_seleccionarmesa');
+                        break;
+                      case '_saloninterior':
+                        Navigator.pushNamed(context, '_seleccionarmesa');
+                        break;
+                      case 'barra':
+                        Navigator.pushNamed(context, '_seleccionarmesa');
+                        break;
+                    }
+                  } else {
+                    int? mesa = int.tryParse(helper.getNames()[index]);
+                    if(mesa != null){
+                      //TODO: Poner los argumentos de la mesa en cuestión (número de comensales, numero de la mesa, etc.)
+                      Navigator.pushNamed(context, '_mesa');
+                    } else {
+                      Navigator.pushNamed(context, route);
+                    }
+                  }
+                    break;
+                case 1:
+                  if(onTap != null){
+                    onTap;
+                  }
+                  break;
+                case 3:
+                  break;
+                default:
+                  break;
+              }
+            },
+            child: _SingleCard(icon: helper.getIcons()[index], color: helper.getColors()[index], text: helper.getNames()[index])),
     );
   }
 }
@@ -93,14 +96,12 @@ class _SingleCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String text;
-  final String? route;
 
   const _SingleCard({
     super.key, 
     required this.icon, 
     required this.color, 
-    required this.text, 
-    required this.route,
+    required this.text,
   });
 
   @override

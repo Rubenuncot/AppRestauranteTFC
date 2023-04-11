@@ -2,6 +2,8 @@ import 'package:app_restaurante/providers/ui_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../helpers/box_helper.dart';
+import '../models/box_model.dart';
 import '../widgets/widgets.dart';
 
 class MesaScreen extends StatelessWidget {
@@ -10,10 +12,26 @@ class MesaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uiProvider = Provider.of<UiProvider>(context);
+    List<BoxModel> boxUper = [
+      BoxModel('Salon', Icons.table_bar, Colors.pink),
+    ];
 
-    final open = uiProvider.open;
-    List<String> mesas = ['Refrescos', 'Café', 'Cervezas', 'Vino Blanco', 'Vino Tinto', 'Ensalada', 'Pescado'];
+    final uperBoxHelper = BoxHelper(boxUper);
+
+    List<BoxModel> boxes = [
+      BoxModel('Refrescos', Icons.looks_one_rounded, Colors.red),
+      BoxModel('Cervezas', Icons.looks_two_rounded, Colors.green),
+      BoxModel('Vinos Tintos', Icons.looks_3_rounded, Colors.blue),
+      BoxModel('Vinos Blancos', Icons.looks_4_rounded, Colors.yellow),
+      BoxModel('Carnes', Icons.looks_5_rounded, Colors.yellow),
+      BoxModel('Pescados', Icons.looks_6_rounded, Colors.yellow),
+    ];
+
+    boxUper[0].incrementIndex();
+    for(var i = 0; i < boxes.length; i++){
+      boxes[i].incrementIndex();
+    }
+    final boxHelper = BoxHelper(boxes);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -24,43 +42,21 @@ class MesaScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   height: size.height * 0.3,
-                  child: InkWell(
-                    onTap: () {print('Hola');},
-                    child: const CardTable(
-                      icons: [
-                        Icons.looks_one, 
-                      ], 
-                      names: ['Mesa 1'], 
-                      routes: ['empty'],
-                    ),
+                  child: CardTable(
+                    option: 3,
+                    helper: uperBoxHelper,
                   ),
                 ),
                 SizedBox(
                   height: size.height * 0.5,
                   child: CardTable(
-                    icons: const [
-                      Icons.bubble_chart_outlined, 
-                      Icons.coffee, 
-                      Icons.sports_bar, 
-                      Icons.wine_bar_outlined,
-                      Icons.wine_bar,
-                      Icons.local_florist_sharp,
-                      Icons.set_meal_sharp,
-                    ], 
-                    names: mesas, 
-                    routes: mesas,
+                    option: 2,
+                    helper: boxHelper,
                   ),
                 ),
               ],
             )
           ),
-          if(uiProvider.open) SafeArea(
-            child: Container(
-              color: Colors.amber,
-              width: 300,
-              height: 300,
-            )
-          )
         ]
       ),
       drawer: const Drawer(backgroundColor: Colors.indigo),

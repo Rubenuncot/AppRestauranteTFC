@@ -34,15 +34,15 @@ class RoutesList {
         screen: const MesaScreen(),
         route: '_mesa'),
     MenuOption(
-        name: 'mesaSelection',
+        name: 'seleccionarmesa',
         icon: Icons.animation,
         screen: const MesaSelectionScreen(),
-        route: '_mesaSelection'),
+        route: '_seleccionarmesa'),
     MenuOption(
-        name: 'salaSelection',
+        name: 'seleccionarsala',
         icon: Icons.input,
         screen: const SalaSelectionScreen(),
-        route: '_salaSelection'),
+        route: '_seleccionarsala'),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {

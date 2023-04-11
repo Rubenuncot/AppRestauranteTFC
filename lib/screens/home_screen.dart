@@ -9,6 +9,7 @@ class HomeScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -37,9 +38,13 @@ class HomeScreen extends StatelessWidget {
                 child: 
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.pushNamed(context, '_main');
-                      // String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('0xFF4b0082', 'Cerrar', false, ScanMode.QR);
-                      // print(barcodeScanRes);
+
+                      // Navigator.pushNamed(context, '_main');
+                      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#1C4C96", "Cancelar", false, ScanMode.QR);
+                      if(barcodeScanRes == 'hola'){
+                        Navigator.pushNamed(context, '_main');
+                      }
+
                     },
                       
                     child: const Text('Iniciar Sesión'),

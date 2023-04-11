@@ -1,5 +1,8 @@
+import 'package:app_restaurante/helpers/box_helper.dart';
 import 'package:app_restaurante/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+
+import '../models/box_model.dart';
 
 class MainScreen extends StatelessWidget {
    
@@ -7,31 +10,28 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<BoxModel> boxes = [
+      BoxModel('Seleccionar Sala', Icons.table_bar_rounded, Colors.red),
+      BoxModel('Ver Facturas', Icons.card_travel, Colors.green),
+      BoxModel('Ver Productos', Icons.production_quantity_limits, Colors.blue),
+      BoxModel('Ajustes', Icons.settings, Colors.yellow),
+    ];
+    for(var i = 0; i < boxes.length; i++){
+      boxes[i].incrementIndex();
+    }
+
+    final BoxHelper boxHelper = BoxHelper(boxes);
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
           BackGround(size: size),
-          const SafeArea(
+          SafeArea(
             child: CardTable(
-              icons: [
-                Icons.table_bar_rounded, 
-                Icons.add_chart_sharp, 
-                Icons.production_quantity_limits_rounded, 
-                Icons.settings
-              ], 
-              names: [
-                'Seleccionar Sala', 
-                'Ver Facturas', 
-                'Ver Productos', 
-                'Configuración'
-              ], 
-              routes: [
-                '_salaSelection', 
-                '_invoice',
-                '_product',
-                '_config',
-              ],)
+              option: 0,
+              helper: boxHelper,
+            )
           ),
         ]
       )
