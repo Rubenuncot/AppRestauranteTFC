@@ -16,11 +16,8 @@ class MainScreen extends StatelessWidget {
       BoxModel('Ver Productos', Icons.production_quantity_limits, Colors.blue),
       BoxModel('Ajustes', Icons.settings, Colors.yellow),
     ];
-    for(var i = 0; i < boxes.length; i++){
-      boxes[i].incrementIndex();
-    }
+    final boxHelper = BoxHelper(boxes);
 
-    final BoxHelper boxHelper = BoxHelper(boxes);
     final size = MediaQuery.of(context).size;
 
     return Scaffold(

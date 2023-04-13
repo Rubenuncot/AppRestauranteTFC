@@ -58,10 +58,17 @@ class BoxHelper {
   List<Color> getColors() {
     List<Color> colors = [];
     for (var box in boxes) {
+      if (!allBoxes.contains(box)) {
+        allBoxes.add(box);
+      }
       colors.add(box.color);
     }
 
     return colors;
+  }
+
+  void setColor(int i, Color color){
+    allBoxes[i].color = color;
   }
 
   BoxModel getBox(int i) {
@@ -72,5 +79,14 @@ class BoxHelper {
       }
     }
     return boxModel;
+  }
+
+  bool checkBoxName(String name){
+    for(var box in allBoxes){
+      if(box.name == name){
+        return true;
+      }
+    }
+    return false;
   }
 }

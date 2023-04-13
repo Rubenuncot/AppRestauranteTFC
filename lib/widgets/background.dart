@@ -1,5 +1,7 @@
+import 'package:app_restaurante/providers/theme_provider.dart';
 import 'package:app_restaurante/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BackGround extends StatelessWidget {
   final Size size;
@@ -21,7 +23,8 @@ class BackGround extends StatelessWidget {
           ),
           Container(
             height: size.height,
-            color: AppTheme.backgroundColor,
+            color:
+            Provider.of<ThemeProvider>(context).currentThemeName == 'light' ? AppTheme.backgroundColorLight : AppTheme.backgroundColorDark,
           ),
       ],
     );

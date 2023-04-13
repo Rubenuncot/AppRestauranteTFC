@@ -30,14 +30,13 @@ class MesaScreen extends StatelessWidget {
       BoxModel('Pescados', Icons.looks_6_rounded, Colors.yellow),
     ];
 
-    boxUper[0].incrementIndex();
-    for(var i = 0; i < boxes.length; i++){
-      boxes[i].incrementIndex();
-    }
     final boxHelper = BoxHelper(boxes);
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar(title: boxUper[0].name),
+      floatingActionButton: const CustomSideBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       body: Stack(
         children: [
           BackGround(size: size, image: 'utils/images/backgiffood.gif',),
@@ -45,17 +44,23 @@ class MesaScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: size.height * 0.3,
                   child: CardTable(
                     option: 3,
                     helper: uperBoxHelper,
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.5,
-                  child: CardTable(
-                    option: 2,
-                    helper: boxHelper,
+                Container(
+                  margin: EdgeInsets.only(left: size.width * 0.2),
+                  child: SizedBox(
+                    height: size.height * 0.6,
+                    child: CardTable(
+                      circleSize: 30,
+                      iconSize: 30,
+                      fontSize: 15,
+                      crossAxisCount: 2,
+                      option: 2,
+                      helper: boxHelper,
+                    ),
                   ),
                 ),
               ],

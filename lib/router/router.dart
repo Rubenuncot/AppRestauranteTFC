@@ -19,15 +19,15 @@ class RoutesList {
         screen: const ConfigScreen(),
         route: '_ajustes'),
     MenuOption(
-        name: 'invoice',
+        name: 'verfacturas',
         icon: Icons.alarm,
         screen: const InvoiceScreen(),
-        route: '_invoice'),
+        route: '_verfacturas'),
     MenuOption(
-        name: 'product',
+        name: 'verproductos',
         icon: Icons.call_to_action_rounded,
         screen: const ProductScreen(),
-        route: '_product'),
+        route: '_verproductos'),
     MenuOption(
         name: 'mesa',
         icon: Icons.supervised_user_circle,

@@ -7,13 +7,7 @@ class BoxModel {
   IconData icon;
   Color color;
 
-  BoxModel(
-      this.name,
-      this.icon,
-      this.color,
-      {this.index = 0});
-
-  void incrementIndex(){
+  BoxModel(this.name, this.icon, this.color, {this.index = 0}){
     currentIndex++;
     index = currentIndex;
   }

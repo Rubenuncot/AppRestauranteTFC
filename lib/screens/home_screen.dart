@@ -1,3 +1,4 @@
+import 'package:app_restaurante/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         
         children: [
-          BackGround(size: size, image: 'utils/images/backgiffood.gif',),
+          BackGround(size: size, image: AppTheme.backgroundImage,),
           Column(
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,12 +40,11 @@ class HomeScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
 
-                      // Navigator.pushNamed(context, '_main');
-                      // String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#1C4C96", "Cancelar", false, ScanMode.QR);
-                      // if(barcodeScanRes == 'hola'){
-                      //   Navigator.pushNamedAndRemoveUntil(context, '_main', (route) => false);
-                      // }
-                      Navigator.pushNamedAndRemoveUntil(context, '_main', (route) => false);
+                      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#1C4C96", "Cancelar", false, ScanMode.QR);
+                      if(barcodeScanRes == 'hola'){
+                        Navigator.pushReplacementNamed(context, '_main');
+                      }
+                      // Navigator.pushReplacementNamed(context, '_main');;
                     },
                       
                     child: const Text('Iniciar Sesión'),

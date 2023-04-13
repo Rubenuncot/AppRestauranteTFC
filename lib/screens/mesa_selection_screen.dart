@@ -42,12 +42,8 @@ class MesaSelectionScreen extends StatelessWidget {
       BoxModel('${selectedPrefix}5', Icons.looks_5_rounded, Colors.yellow),
       BoxModel('${selectedPrefix}6', Icons.looks_6_rounded, Colors.yellow),
     ];
-    boxUper[0].incrementIndex();
-    for(var i = 0; i < boxes.length; i++){
-      boxes[i].incrementIndex();
-    }
-
     final boxHelper = BoxHelper(boxes);
+
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -67,6 +63,7 @@ class MesaSelectionScreen extends StatelessWidget {
                 SizedBox(
                   height: size.height * 0.6,
                   child: CardTable(
+                    crossAxisCount: 2,
                     option: 0,
                     helper: boxHelper,
                   ),

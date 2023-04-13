@@ -19,12 +19,8 @@ class SalaSelectionScreen extends StatelessWidget {
       BoxModel('Salon Interior', Icons.table_bar_outlined, Colors.blue),
       BoxModel('Barra', Icons.sports_bar, Colors.yellow),
     ];
-
-    for(var i = 0; i < boxes.length; i++){
-      boxes[i].incrementIndex();
-    }
-
     final boxHelper = BoxHelper(boxes);
+
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
