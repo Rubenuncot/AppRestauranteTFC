@@ -15,9 +15,7 @@ class InvoiceScreen extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Facturas'),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
+        onPressed: () {},
         child: const Icon(Icons.add),
       ),
       body: Stack(
@@ -40,8 +38,7 @@ class InvoiceScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.black38),
                             borderRadius: BorderRadius.circular(15),
-                            color:const Color.fromARGB(
-                                226, 255, 255, 255)),
+                            color: const Color.fromARGB(226, 255, 255, 255)),
                       ),
                       Column(
                         //Content
@@ -56,10 +53,10 @@ class InvoiceScreen extends StatelessWidget {
                                     text: '1502c11200',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
-                                        fontStyle: FontStyle.italic)),
+                                        fontStyle: FontStyle.italic, color: Colors.black54)),
                               ]),
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
+                                  fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
                             ),
                           ),
                           const SizedBox(
@@ -115,20 +112,37 @@ class InvoiceScreen extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(horizontal: 30),
                             child: SizedBox(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
                                     onPressed: () {},
-                                    style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color.fromARGB(
-                                        113, 130, 176, 211))),
+                                    style: const ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                Color.fromARGB(
+                                                    113, 130, 176, 211))),
                                     child: const Text('Ver Factura'),
                                   ),
                                   const Divider(),
                                   TextButton(
-                                      onPressed: () {},
-                                      style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color.fromARGB(
-                                          255, 196, 255, 204))),
-                                      child: const Text('Editar Factura', style: TextStyle(color: Colors.green),)),
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const AlertDialogCustom(
+                                                    titulo: 'Editar Factura',
+                                                    contenido: CustomForm()));
+                                      },
+                                      style: const ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  Color.fromARGB(
+                                                      255, 196, 255, 204))),
+                                      child: const Text(
+                                        'Editar Factura',
+                                        style: TextStyle(color: Colors.green),
+                                      )),
                                 ],
                               ),
                             ),
@@ -152,9 +166,11 @@ class InvoiceScreen extends StatelessWidget {
         TextSpan(
             text: content,
             style: const TextStyle(
-                fontWeight: FontWeight.normal, fontStyle: FontStyle.italic)),
+                fontWeight: FontWeight.normal, fontStyle: FontStyle.italic, color: Colors.black54)),
       ]),
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black),
     );
   }
 }
+
+

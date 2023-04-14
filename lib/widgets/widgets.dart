@@ -1,3 +1,5 @@
+export 'package:app_restaurante/widgets/custom_form.dart';
+
 export 'package:app_restaurante/widgets/lateral_bar.dart';
 
 export 'package:app_restaurante/widgets/AlertDialogCustom.dart';

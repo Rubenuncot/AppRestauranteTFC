@@ -40,11 +40,11 @@ class HomeScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
 
-                      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#1C4C96", "Cancelar", false, ScanMode.QR);
-                      if(barcodeScanRes == 'hola'){
-                        Navigator.pushReplacementNamed(context, '_main');
-                      }
-                      // Navigator.pushReplacementNamed(context, '_main');;
+                      // String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#1C4C96", "Cancelar", false, ScanMode.QR);
+                      // if(barcodeScanRes == 'hola'){
+                      //   Navigator.pushReplacementNamed(context, '_main');
+                      // }
+                      Navigator.pushReplacementNamed(context, '_main');
                     },
                       
                     child: const Text('Iniciar Sesión'),
